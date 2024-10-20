@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>随机选择城市</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #city-name {
+            font-size: 2em;
+            color: #333;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            #city-name {
+                font-size: 1.5em;
+            }
+
+            button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>随机选择城市</h1>
+        <div id="city-name"></div>
+        <button id="select-city">自由筛选</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#select-city').click(function() {
+                $('#city-name').text('加载中...').css('color', '#ccc');
+                $.post('/random_city', function(data) {
+                    $('#city-name').text(data.city).css('color', '#333');
+                    $('#city-name').addClass('animate');
+                    setTimeout(function() {
+                        $('#city-name').removeClass('animate');
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
